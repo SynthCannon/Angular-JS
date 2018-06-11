@@ -1,0 +1,94 @@
+<html ng-app="Sixth">
+<script src="angular.js"></script>
+<script>
+  var M = angular.module("Sixth", []);
+
+  M.controller("myCtrl", function($scope) {
+    var rec = [{
+        regNo: 12,
+        name: 'Shafeeq',
+        country: 'USA'
+      },
+      {
+        regNo: 13,
+        name: 'Nick',
+        country: 'North Korea'
+      },
+      {
+        regNo: 14,
+        name: 'Roland',
+        country: 'Poland'
+      },
+      {
+        regNo: 15,
+        name: 'George',
+        country: 'Russia'
+      },
+      {
+        regNo: 16,
+        name: 'Dan',
+        country: 'Spain'
+      },
+      {
+        regNo: 17,
+        name: 'Liam',
+        country: 'Spain'
+      },
+      {
+        regNo: 18,
+        name: 'John',
+        country: 'UK'
+      }
+    ];
+
+    $scope.data = rec;
+    $scope.field = "country";
+    $scope.order = false;
+  });
+</script>
+
+<body>
+  <table ng-controller="myCtrl">
+    <th>
+      <input ng-model="srch.regNo" /></br>
+      <span ng-click="field='regNo';order=!order">RegNo</span><span ng-if="field=='regNo' && order==false">&#9662;</span><span ng-if="field=='regNo' && order==true">&#9652;</span>
+    </th>
+    <th>
+      <input ng-model="srch.name" /></br>
+      <span ng-click="field='name';order=!order">Name</span><span ng-if="field=='name' && order==false">&#9662;</span><span ng-if="field=='name' && order==true">&#9652;</span>
+    </th>
+    <th>
+      <input ng-model="srch.country" /></br>
+      <span ng-click="field='country';order=!order">Country</span><span ng-if="field=='country' && order==false">&#9662;</span><span ng-if="field=='country' && order==true">&#9652;</span>
+    </th>
+    <th>
+      <span ng-click="field='country';order=!order">Flag</span><span ng-if="field=='country' && order==false">&#9662;</span><span ng-if="field=='country' && order==true">&#9652;</span>
+    </th>
+
+    <tr ng-repeat="d in data|orderBy:field:order|filter:srch">
+      <td>
+        {{d.regNo}}
+      </td>
+      <td>
+        {{d.name}}
+      </td>
+      <td>
+        {{d.country}}
+      </td>
+      <td>
+        <span ng-switch on="d.country">
+          <img ng-switch-when="Spain" src="flags/spain.png" />
+          <img ng-switch-when="UK" src="flags/uk.png" />
+          <img ng-switch-when="Russia" src="flags/russia.png" />
+          <img ng-switch-when="Poland" src="flags/poland.png" />
+          <img ng-switch-when="USA" src="flags/usa.png" />
+          <img ng-switch-when="North Korea" src="flags/nk.png" />
+        </span>
+      </td>
+    </tr>
+
+  </table>
+
+</body>
+
+</html>

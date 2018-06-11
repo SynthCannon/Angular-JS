@@ -1,0 +1,22 @@
+<html ng-app="Fourth">
+<script src="angular.js"></script>
+<script>
+  var M = angular.module("Fourth",[]);
+
+  M.controller("myCtrl",function($scope){
+    var rec = { regNo:12,
+                name:'Shafeeq',
+                address:'manchester'};
+
+    $scope.record = rec;
+  });
+</script>
+
+<body>
+<div ng-controller="myCtrl">
+  {{record.regNo}} </br>
+  {{record.name}}
+</div>
+</body>
+
+</html>

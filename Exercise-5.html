@@ -1,0 +1,33 @@
+<html ng-app="Fifth">
+<script src="angular.js"></script>
+<script>
+  var M = angular.module("Fifth", []);
+
+  M.controller("myCtrl", function($scope) {
+    var rec = {
+      regNo: 12,
+      name: 'Shafeeq',
+      address: 'manchester',
+      marks: 49
+    };
+
+    $scope.record = rec;
+  });
+</script>
+
+<body>
+  <div ng-controller="myCtrl">
+    Name: {{record.name}}</br>
+    Marks: {{record.marks}}</br>
+
+    <b ng-if="record.marks>=70">
+      Pass
+    </b>
+    <b ng-if="record.marks<70">
+      Fail
+    </b>
+
+  </div>
+</body>
+
+</html>

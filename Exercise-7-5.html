@@ -1,0 +1,85 @@
+<html ng-app="Sixth">
+<script src="angular.js"></script>
+<script>
+  var M = angular.module("Sixth", []);
+
+  M.controller("myCtrl", function($scope) {
+    var rec = [{
+        regNo: 12,
+        name: 'Shafeeq',
+        marks: 49
+      },
+      {
+        regNo: 13,
+        name: 'Nick',
+        marks: 6969
+      },
+      {
+        regNo: 14,
+        name: 'Roland',
+        marks: 69
+      },
+      {
+        regNo: 15,
+        name: 'George',
+        marks: 8008135
+      }
+    ];
+
+    $scope.data = rec;
+    $scope.field = "marks";
+    $scope.order = false;
+
+    $scope.click = function(header){
+      if($scope.field == header){
+        $scope.order = !$scope.order;
+      } else {
+        $scope.field = header;
+        $scope.order = false;
+      }
+    }
+
+  });
+</script>
+
+<body>
+
+  <table ng-controller="myCtrl">
+    <th ng-click="click('regNo')">
+      RegNo
+    </th>
+    <th ng-click="click('name')">
+      Name
+    </th>
+    <th ng-click="click('marks')">
+      Marks
+    </th>
+    <th ng-click="click('marks')">
+      Pass/Fail
+    </th>
+    <tr ng-repeat-start="d in data|orderBy:field:order">
+      <td>
+        {{d.regNo}}
+      </td>
+      <td>
+        {{d.name}}
+      </td>
+      <td>
+        {{d.marks}}
+      </td>
+      <td color="red">
+        <b ng-if="d.marks>=70" style="color:green">
+          Pass
+        </b>
+        <b ng-if="d.marks<70" style="color:red">
+          Fail
+        </b>
+      </td>
+    </tr>
+    <tr ng-repeat-end/>
+
+  </table>
+
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<html ng-app="Second">
+<script src="angular.js"></script>
+<script>
+  var M = angular.module("Second",[]);
+
+  M.controller("myCtrl",function($scope){
+    $scope.name="Nick";
+    $scope.mark=49;
+  }
+  );
+</script>
+
+<body>
+<div ng-controller="myCtrl">
+  Name: {{name}}</br>
+  Mark: {{mark}}</br>
+</div>
+</body>
+
+</html>
