@@ -1,0 +1,104 @@
+<html ng-app="Table">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
+  var M = angular.module("Table", []);
+
+  var F = function($scope) {
+    var rec = [{
+        name: 'Shafeeq',
+        gender: 'm',
+        salary: 35000
+      },
+      {
+        name: 'Nick',
+        gender: 'm',
+        salary: 2000000
+      },
+      {
+        name: 'Rachel',
+        gender: 'f',
+        salary: 25000
+      },
+      {
+        name: 'Roland',
+        gender: 'Legless lizard man',
+        salary: 5
+      },
+      {
+        name: 'George',
+        gender: 'TMNT',
+        salary: 15000
+      }
+    ];
+
+    $scope.data = rec;
+    $scope.field = "name";
+    $scope.order = false;
+  }
+
+  M.controller("myCtrl", F);
+
+  M.filter("showGender", function() {
+    var gender = function(g) {
+      switch (g) {
+        case 'm':
+          return 'Male';
+        case 'f':
+          return 'Female';
+        default:
+          return 'Alien';
+      }
+    };
+    return gender;
+  });
+
+  M.filter("showTax", function(){
+    return function(x){
+      if(x < 10000){
+        return 0;
+      } else if (x < 20000){
+        return x*0.15;
+      } else if (x<30000){
+        return x*0.19;
+      } else if (x<40000){
+        return x*0.21;
+      } else { return x*0.25;}
+    }
+  });
+
+</script>
+
+<body>
+  Search: <input ng-model="srch" /></br>
+  <table ng-controller="myCtrl">
+    <th ng-click="field='name';order=!order">
+      Name<span ng-if="field=='name' && order==false">&#9662;</span><span ng-if="field=='name' && order==true">&#9652;</span>
+    </th>
+    <th ng-click="field='gender';order=!order">
+      Gender<span ng-if="field=='gender' && order==false">&#9662;</span><span ng-if="field=='gender' && order==true">&#9652;</span>
+    </th>
+    <th ng-click="field='salary';order=!order">
+      Salary<span ng-if="field=='salary' && order==false">&#9662;</span><span ng-if="field=='salary' && order==true">&#9652;</span>
+    </th>
+    <th ng-click="field='salary';order=!order">
+      Tax<span ng-if="field=='salary' && order==false">&#9662;</span><span ng-if="field=='salary' && order==true">&#9652;</span>
+    </th>
+    <tr ng-repeat='d in data|orderBy:field:order'>
+      <td>
+        {{d.name}}
+      </td>
+      <td>
+        {{d.gender|showGender}}
+      </td>
+      <td>
+        £{{d.salary}}
+      </td>
+      <td>
+        £{{d.salary|showTax|number:2}}
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

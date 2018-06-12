@@ -1,0 +1,99 @@
+<html ng-app="Table">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="ngMask.min.js"></script>
+<script>
+  var F = function($scope) {
+    var rec = [{
+      name: 'Java',
+      likes: 0,
+      dislikes: 0
+    }, {
+      name: 'C++',
+      likes: 2,
+      dislikes: 12
+    }];
+
+    $scope.data = rec;
+
+    var timer1, timer2;
+
+    $scope.like = function(d) {
+      d.likes++;
+      timer1 = setInterval(increaseLikes,100,d);
+    }
+    $scope.stopLike = function(d) {
+      clearInterval(timer1);
+    }
+    function increaseLikes(d) {
+      d.likes++;
+    }
+
+    $scope.dislike = function(index) {
+      $scope.data[index].dislikes++;
+
+      timer2 = setInterval(increaseDislikes,100,index);
+    }
+    $scope.stopDislike = function() {
+      clearInterval(timer2);
+    }
+    function increaseDislikes(index) {
+      $scope.data[index].dislikes++;
+      //d.dislikes++;
+    }
+
+  }
+
+  var M = angular.module("Table", ['ngMask.min.js']);
+
+  M.controller("myCtrl", F);
+
+  M.filter("filter",function(){
+    return function (lik,dis){
+      if(lik > dis){
+        return "More Likes";
+      } else if (lik < dis){
+        return "More Dislikes";
+      } else{
+        return "Equal";
+      }
+    }
+  });
+</script>
+
+<body>
+  <table ng-controller="myCtrl">
+    <th>
+      Language
+    </th>
+    <th>
+      Likes
+    </th>
+    <th>
+      Dislikes
+    </th>
+    <th>
+      Result
+    </th>
+    <tr ng-repeat="d in data">
+      <td>
+        {{d.name}}
+      </td>
+      <td>
+        <span ng-app="myApp" ng-controller="myCtrl"> {{d.likes}} </span>
+      </td>
+      <td>
+        <span ng-app="myApp" ng-controller="myCtrl"> {{d.dislikes}} </span>
+      </td>
+      <td>
+        {{d.likes|filter:d.dislikes}}
+      </td>
+      <td>
+        <input type="button" value=like ng-mousedown="like($index)" ng-mouseup="stopLike()" />
+        <input type="button" value=dislike ng-mousedown="dislike($index)" ng-mouseup="stopDislike()" ng-model="data"/>
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

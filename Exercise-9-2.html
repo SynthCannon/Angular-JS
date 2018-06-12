@@ -1,0 +1,132 @@
+<html ng-app="Table">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
+  var F = function($scope) {
+    var rec = [{
+        name: 'Shafeeq',
+        age: 20,
+        gender: 'm',
+        salary: 35000
+      },
+      {
+        name: 'Nick',
+        age: 69,
+        gender: 'm',
+        salary: 420.69
+      },
+      {
+        name: 'Rachel',
+        age: 20,
+        gender: 'f',
+        salary: 25000
+      },
+      {
+        name: 'Roland',
+        age: 24,
+        gender: 'm',
+        salary: 20
+      },
+      {
+        name: 'George',
+        age: 20,
+        gender: 'm',
+        salary: 15000
+      },
+      {
+        name: 'Megan',
+        age: 59,
+        gender: 'f',
+        salary: 40000
+      }
+    ];
+
+    $scope.data = rec;
+  }
+
+  var M = angular.module("Table", []);
+
+  M.controller("myCtrl", F);
+
+  M.filter("showGender", function() {
+    var gender = function(g) {
+      switch (g) {
+        case 'm':
+          return 'Male';
+        case 'f':
+          return 'Female';
+        default:
+          return 'Alien';
+      }
+    };
+    return gender;
+  });
+
+  M.filter("showTax", function() {
+    return function(s, a, g) {
+
+      if (g == 'f' && a > 30) {
+        return 573;
+      } else if (a > 30){
+        return s*0.36;
+      } else {
+        if (s < 10000) {
+          return 0;
+        } else if (s < 20000) {
+          return s * 0.15;
+        } else if (s < 30000) {
+          return s * 0.19;
+        } else if (s < 40000) {
+          return s * 0.21;
+        } else {
+          return s * 0.36;
+        }
+      }
+    }
+  });
+</script>
+
+<body>
+  <table ng-controller="myCtrl">
+    <th>
+      Name
+    </th>
+    <th>
+      Gender
+    </th>
+    <th>
+      Age
+    </th>
+    <th>
+      Salary
+    </th>
+    <th>
+      Annual Salary
+    </th>
+    <th>
+      Tax
+    </th>
+    <tr ng-repeat="d in data">
+      <td>
+        {{d.name}}
+      </td>
+      <td>
+        {{d.gender|showGender}}
+      </td>
+      <td>
+        {{d.age}}
+      </td>
+      <td>
+        £{{d.salary}}
+      </td>
+      <td>
+        £{{d.salary*12|number:2}}
+      </td>
+      <td>
+        £{{d.salary|showTax:d.age:d.gender|number:2}}
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

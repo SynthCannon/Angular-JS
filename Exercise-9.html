@@ -1,0 +1,72 @@
+<html ng-app="Ninth">
+<script src="angular.js"></script>
+<script>
+  var M = angular.module("Ninth", []);
+
+  var F = function($scope) {
+    var rec = [{
+        name: 'Shafeeq',
+        gender: 'm'
+      },
+      {
+        name: 'Nick',
+        gender: 'm'
+      },
+      {
+        name: 'Rachel',
+        gender: 'f'
+      },
+      {
+        name: 'Roland',
+        gender: 'Legless lizard man'
+      },
+      {
+        name: 'George',
+        gender: 'TMNT'
+      }
+    ];
+
+    $scope.data = rec;
+    $scope.field = "name";
+    $scope.order = false;
+  }
+
+  M.controller("myCtrl", F);
+
+  M.filter("showGender", function() {
+    var fun = function(g) {
+      switch (g) {
+        case 'm':
+          return 'Male';
+        case 'f':
+          return 'Female';
+        default:
+          return 'Alien';
+      }
+    };
+    return fun;
+  })
+</script>
+
+<body>
+  Search: <input ng-model="srch" /></br>
+  <table ng-controller="myCtrl">
+    <th ng-click="field='name';order=!order">
+      Name<span ng-if="field=='name' && order==false">&#9662;</span><span ng-if="field=='name' && order==true">&#9652;</span>
+    </th>
+    <th ng-click="field='gender';order=!order">
+      Gender<span ng-if="field=='gender' && order==false">&#9662;</span><span ng-if="field=='gender' && order==true">&#9652;</span>
+    </th>
+    <tr ng-repeat='d in data|orderBy:field:order'>
+      <td>
+        {{d.name}}
+      </td>
+      <td>
+        {{d.gender|showGender}}
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>
