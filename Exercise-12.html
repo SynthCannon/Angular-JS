@@ -35,7 +35,7 @@
       d.name = window.prompt("jsdugfu","hfhhfh");
     }
 
-    $scope.add = function(){
+    $scope.add3 = function(){
       $scope.data.push($scope.tempData);
       $scope.tempData = null;
     }
@@ -76,12 +76,12 @@
     </tr>
     <tr>
       <td>
-        <input type="button" value="add" ng-click="add()"/>
+        <input type="button" value="add" ng-click="add3()"/>
       </td>
     </tr>
   </table>
 
-  <table ng-controller="myCtrl">
+  <table>
     <th>
       RegNo
     </th>
